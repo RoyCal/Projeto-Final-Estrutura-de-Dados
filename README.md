@@ -17,7 +17,10 @@ Você pode instalar a biblioteca PyGame utilizando o comando "pip install pygame
 Após baixar os arquivos, tenha o cuidado de manter as imagens no mesmo diretório do código, caso contrário, o programa não irá encontrá-las. Verifique 
 também se código está sendo rodado no diretório correto. 
 
-> 
-
 ## Utilização
 
+O programa possui uma interface simples e deve-se utilizar um mouse e um teclado.
+
+<div align="center"> 
+  <img width="600em" src="tela0.png"/>
+</div>
