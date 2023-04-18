@@ -22,5 +22,6 @@ também se código está sendo rodado no diretório correto.
 O programa possui uma interface simples e deve-se utilizar um mouse e um teclado.
 
 <div align="center"> 
-  <img width="600em" src="tela0.png"/>
+  <img width="504em" src="tela0.png"/>
+  <img width="500em" src="exemplo.png"/>
 </div>
