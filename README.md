@@ -5,13 +5,19 @@
 - Listas simplesmente encadeadas
 - Listas duplamente encadeadas
 
-### Requeirements:
+## Requirements:
 
 - Python version 3.10.11
 - PyGame version 2.3.0
 
 Você pode instalar a biblioteca PyGame utilizando o comando "pip install pygame" no seu terminal python.
 
-### Como rodar o programa
+## Como rodar o programa
 
-Você 
+Após baixar os arquivos, tenha o cuidado de manter as imagens no mesmo diretório do código, caso contrário, o programa não irá encontrá-las. Verifique 
+também se código está sendo rodado no diretório correto. 
+
+> 
+
+## Utilização
+
