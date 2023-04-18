@@ -1,3 +1,13 @@
+
+#  ============================================================================
+#  Nome      : Simulador de Estruturas de Dados
+#  Autor     : Vito Elias de Queiroga
+#  Versao    : 1.0
+#  Copyright : 
+#  Descricao : Representacao visual do funcionamento de algumas 
+#              estruturas de dados
+#  ============================================================================
+
 import pygame
 from pygame.locals import *
 from sys import exit
