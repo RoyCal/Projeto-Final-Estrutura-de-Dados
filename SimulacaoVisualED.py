@@ -1097,6 +1097,9 @@ def movimento_adicionar_no(pos, valor):
 
         pygame.display.update()
 
+    for event in pygame.event.get():
+        pass
+
 def movimento_adicionar_no_2(pos, valor):
     offsetx1 = 0
 
@@ -1255,6 +1258,9 @@ def movimento_adicionar_no_2(pos, valor):
             finished = 1
 
         pygame.display.update()
+
+    for event in pygame.event.get():
+        pass
 
 def movimento_remover_no(pos):
     offsetx1 = 0
@@ -1417,6 +1423,9 @@ def movimento_remover_no(pos):
         listaTemp.imprimirLista(offsetx1)
         pygame.display.update()
         time.sleep(1)
+
+    for event in pygame.event.get():
+        pass
 
 def movimento_remover_no_2(pos):
     offsetx1 = 0
@@ -1623,6 +1632,9 @@ def movimento_remover_no_2(pos):
         listaTemp.imprimirLista(offsetx1)
         pygame.display.update()
         time.sleep(1)
+
+    for event in pygame.event.get():
+        pass
 
 #################################################################################################################################################
 ################################################      LOOP      DO     JOGO      ################################################################
