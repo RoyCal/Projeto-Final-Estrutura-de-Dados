@@ -840,7 +840,7 @@ class InputBox:
             int(self.text)
             return self.text
         except:
-            return 
+            return ""
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
