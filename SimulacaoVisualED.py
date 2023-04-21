@@ -1657,14 +1657,19 @@ while True:
                     offsetx = -240*(listaS.tamanho()-5)
                 elif pagina == 3:
                     offsetx = -240*(listade.tamanho()-5)
-        if event.type == MOUSEBUTTONDOWN and 205 <= mouse[0] <= 680 and 340 <= mouse[1] <= 415 and pagina == 0: #BOTAO PAGINA 1
+        if event.type == MOUSEBUTTONDOWN:
+            print("X: ", mouse[0])
+            print("Y: ", mouse[1])
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345 and pagina == 0: #BOTAO PAGINA 1
             pagina = 1
-        if event.type == MOUSEBUTTONDOWN and 205 <= mouse[0] <= 1040 and 495 <= mouse[1] <= 570 and pagina == 0: #BOTAO PAGINA 2
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 1045 and 365 <= mouse[1] <= 440 and pagina == 0: #BOTAO PAGINA 2
             pagina = 2
             offsetx = 0
-        if event.type == MOUSEBUTTONDOWN and 205 <= mouse[0] <= 1005 and 655 <= mouse[1] <= 730 and pagina == 0: #BOTAO PAGINA 3
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 1010 and 470 <= mouse[1] <= 545 and pagina == 0: #BOTAO PAGINA 3
             pagina = 3
             offsetx = 0
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 850 and 765 <= mouse[1] <= 840 and pagina == 0: #BOTAO PAGINA 6
+            pagina = 6
         if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3): #BOTAO VOLTAR MENU
             pagina = 0
         if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 1: #INSERIR PAGINA 1
@@ -1876,27 +1881,33 @@ while True:
     if pagina == 0: #MENU
         tela.blit(tela0, (0, 0))
 
-        if 205 <= mouse[0] <= 680 and 340 <= mouse[1] <= 415:
+        if 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345:
             color1 = "black"
-
         else:
             color1 = "white"
 
-        if 205 <= mouse[0] <= 1040 and 495 <= mouse[1] <= 570:
+        if 210 <= mouse[0] <= 1045 and 365 <= mouse[1] <= 440:
             color2 = "black"
         else:
             color2 = "white"
 
-        if 205 <= mouse[0] <= 1005 and 655 <= mouse[1] <= 730:
+        if 210 <= mouse[0] <= 1010 and 470 <= mouse[1] <= 545:
             color3 = "black"
         else:
             color3 = "white"
 
-        pygame.draw.rect(tela, color1, (205, 340, 475, 75), 2)
+        if 210 <= mouse[0] <= 850 and 765 <= mouse[1] <= 840:
+            color4 = "black"
+        else:
+            color4 = "white"
 
-        pygame.draw.rect(tela, color2, (205, 495, 835, 75), 2)
+        pygame.draw.rect(tela, color1, (210, 270, 475, 75), 2)
 
-        pygame.draw.rect(tela, color3, (205, 655, 800, 75), 2)
+        pygame.draw.rect(tela, color2, (210, 365, 835, 75), 2)
+
+        pygame.draw.rect(tela, color3, (210, 470, 800, 75), 2)
+
+        pygame.draw.rect(tela, color4, (210, 765, 640, 75), 2)
 
     elif pagina == 1: #LISTAS SEQUENCIAIS
         tela.blit(tela1, (0, 0))
