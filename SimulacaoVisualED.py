@@ -949,6 +949,7 @@ tela0 = pygame.image.load('tela0.png')
 tela1 = pygame.image.load('tela1.png')
 tela2 = pygame.image.load('tela2.png')
 tela3 = pygame.image.load('tela3.png')
+tela6 = pygame.image.load('tela6.png')
 
 pagina = 0
 
@@ -1670,7 +1671,7 @@ while True:
             offsetx = 0
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 850 and 765 <= mouse[1] <= 840 and pagina == 0: #BOTAO PAGINA 6
             pagina = 6
-        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3): #BOTAO VOLTAR MENU
+        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3 or pagina == 6): #BOTAO VOLTAR MENU
             pagina = 0
         if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 1: #INSERIR PAGINA 1
             content1 = input_box1.returnText()
@@ -2115,5 +2116,15 @@ while True:
 
         for box in input_boxes3:
             box.draw(tela)
+    elif pagina == 6:
+        tela.blit(tela6, (0, 0))
+
+        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
+            color1 = "black"
+
+        else:
+            color1 = "white"
+
+        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
 
     pygame.display.update()
