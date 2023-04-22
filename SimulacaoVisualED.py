@@ -918,11 +918,9 @@ def print_tela_arvore():
 
     pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
 
-# Insere um novo nó na árvore
 def insert(root_node, value):
     new_node = Node(value)
     if root_node is None:
-        # Se a árvore estiver vazia, o novo nó se torna a raiz
         root_node = new_node
     else:
         current_node = root_node
@@ -936,7 +934,6 @@ def insert(root_node, value):
             current_node.color = "black"
 
             if value < current_node.data:
-                # Verifica se o novo nó deve ser adicionado à esquerda do nó atual
                 if current_node.left_child is None:
                     current_node.left_child = new_node
                     new_node.parent = current_node
@@ -944,7 +941,6 @@ def insert(root_node, value):
                 else:
                     current_node = current_node.left_child
             else:
-                # Verifica se o novo nó deve ser adicionado à direita do nó atual
                 if current_node.right_child is None:
                     current_node.right_child = new_node
                     new_node.parent = current_node
@@ -970,26 +966,20 @@ def find_node(value, root_node):
             current_node = current_node.left_child
         else:
             current_node = current_node.right_child
-    # Se o valor não for encontrado na árvore, retorna None
     return None
 
-# Função para encontrar o nó com o menor valor em uma subárvore
 def find_min_node(node):
     while node.left_child is not None:
         node = node.left_child
     return node
 
-# Função para remover um nó de uma árvore binária de busca
 def remove_tree(value, root_node):
     node_to_remove = find_node(value, root_node)
     if node_to_remove is None:
-        # Se o nó não existir na árvore, não há nada para remover
         return root_node
     
     if node_to_remove.left_child is None and node_to_remove.right_child is None:
-        # Se o nó não tiver filhos, basta removê-lo da árvore
         if node_to_remove.parent is None:
-            # Se o nó a ser removido for a raiz, defina a raiz como None
             root_node = None
         elif node_to_remove.parent.left_child == node_to_remove:
             node_to_remove.parent.left_child = None
@@ -997,7 +987,6 @@ def remove_tree(value, root_node):
             node_to_remove.parent.right_child = None
             
     elif node_to_remove.left_child is None:
-        # Se o nó a ser removido tiver apenas um filho à direita, substitua-o pelo seu filho
         if node_to_remove.parent is None:
             root_node = node_to_remove.right_child
             root_node.parent = None
@@ -1009,7 +998,6 @@ def remove_tree(value, root_node):
             node_to_remove.right_child.parent = node_to_remove.parent
             
     elif node_to_remove.right_child is None:
-        # Se o nó a ser removido tiver apenas um filho à esquerda, substitua-o pelo seu filho
         if node_to_remove.parent is None:
             root_node = node_to_remove.left_child
             root_node.parent = None
@@ -1021,15 +1009,12 @@ def remove_tree(value, root_node):
             node_to_remove.left_child.parent = node_to_remove.parent
             
     else:
-        # Se o nó a ser removido tiver dois filhos, encontre o seu sucessor e substitua-o pelo nó a ser removido
         successor = find_min_node(node_to_remove.right_child)
         remove_tree(successor.data, node_to_remove.right_child)
         node_to_remove.data = successor.data
     
     return root_node
 
-
-# Percorre a árvore e desenha cada nó na tela
 node_radius = 25
 height_difference = 100
 
