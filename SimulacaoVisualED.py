@@ -501,7 +501,7 @@ class listaDE:
                 i += 1
 
                 if no.posicao[0] > largura:
-                    offsetx -= 240
+                    offsetx += 240
 
                 if no.conteudo == valor:
                     no.color = "green"
@@ -947,6 +947,9 @@ def insert(root_node, value):
                     break
                 else:
                     current_node = current_node.right_child
+    for event in pygame.event.get():
+        pass
+
     return root_node
 
 def find_node(value, root_node):
@@ -1012,6 +1015,9 @@ def remove_tree(value, root_node):
         successor = find_min_node(node_to_remove.right_child)
         remove_tree(successor.data, node_to_remove.right_child)
         node_to_remove.data = successor.data
+    
+    for event in pygame.event.get():
+        pass
     
     return root_node
 
@@ -1704,7 +1710,7 @@ def movimento_remover_no_2(pos):
         final_pos2 = listaTemp.dados[pos-1].posicao[0]
 
         if listaTemp.dados[pos-1].posicao[0] > 1280:
-            offsetx1 = -240*(pos-4)
+            offsetx1 = -240*(pos-3)
 
         while listaTemp.dados[pos-1].posicao[1] != final_pos:
             listaTemp.dados[pos-1].posicao = (listaTemp.dados[pos-1].posicao[0], listaTemp.dados[pos-1].posicao[1] + 1)
@@ -1715,14 +1721,12 @@ def movimento_remover_no_2(pos):
             listaTemp.imprimirLista(offsetx1)
             pygame.display.update()
 
-        offsetx1 = 0
-
         time.sleep(0.8)
 
         if pos > listaTemp.tamanho()/2:
             for i in range(listaTemp.tamanho()-1, pos-3, -1):
                 if listaTemp.dados[i].posicao[0] > 1280:
-                    offsetx1 -= 240
+                    offsetx1 += 240
 
                 listaTemp.dados[i].color = "blue"
                 printTela()
