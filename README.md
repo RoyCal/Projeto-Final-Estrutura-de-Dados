@@ -4,6 +4,7 @@
 - Listas sequenciais
 - Listas simplesmente encadeadas
 - Listas duplamente encadeadas
+- Árvore binária de busca
 
 ## Requirements:
 
