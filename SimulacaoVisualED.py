@@ -2,7 +2,7 @@
 #  ============================================================================
 #  Nome      : Simulador de Estruturas de Dados
 #  Autor     : Vito Elias de Queiroga
-#  Versao    : 1.0
+#  Versao    : 2.0
 #  Copyright : 
 #  Descricao : Representacao visual do funcionamento de algumas 
 #              estruturas de dados
@@ -874,6 +874,188 @@ class InputBox:
         # Blit the rect.
         pygame.draw.rect(screen, self.color, self.rect, 2)
 
+class Node:
+    def __init__(self, data):
+        self.left_child = None
+        self.right_child = None
+        self.data = data
+        self.parent = None
+        self.color = "black"
+        self.x = 0
+        self.y = 0
+
+def print_tela_arvore():
+    tela.blit(tela6, (0, 0))
+
+    for box in input_boxes4:
+        box.draw(tela)
+
+    if 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359: #INSERIR
+        color2 = "black"
+
+    else:
+        color2 = "white"
+
+    pygame.draw.rect(tela, color2, (375, 327, 83, 32))
+    pygame.draw.rect(tela, "grey", (376, 328, 81, 30))
+    tela.blit(txt_inserir, (381, 333))
+
+    if 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358: #REMOVER
+        color3 = "black"
+
+    else:
+        color3 = "white"
+
+    pygame.draw.rect(tela, color3, (778, 328, 100, 32))
+    pygame.draw.rect(tela, "grey", (779, 329, 98, 30))
+    tela.blit(txt_remover, (784, 334))
+
+    if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
+        color1 = "black"
+
+    else:
+        color1 = "white"
+
+    pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+
+# Insere um novo nó na árvore
+def insert(root_node, value):
+    new_node = Node(value)
+    if root_node is None:
+        # Se a árvore estiver vazia, o novo nó se torna a raiz
+        root_node = new_node
+    else:
+        current_node = root_node
+        while True:
+            current_node.color = "blue"
+            space = pow(2, get_height(root)-2) * node_radius
+            print_tela_arvore()
+            draw_tree(root, 600, 435, space)
+            pygame.display.update()
+            time.sleep(0.8)
+            current_node.color = "black"
+
+            if value < current_node.data:
+                # Verifica se o novo nó deve ser adicionado à esquerda do nó atual
+                if current_node.left_child is None:
+                    current_node.left_child = new_node
+                    new_node.parent = current_node
+                    break
+                else:
+                    current_node = current_node.left_child
+            else:
+                # Verifica se o novo nó deve ser adicionado à direita do nó atual
+                if current_node.right_child is None:
+                    current_node.right_child = new_node
+                    new_node.parent = current_node
+                    break
+                else:
+                    current_node = current_node.right_child
+    return root_node
+
+def find_node(value, root_node):
+    current_node = root_node
+    while current_node is not None:
+        current_node.color = "blue"
+        space = pow(2, get_height(root)-2) * node_radius
+        print_tela_arvore()
+        draw_tree(root, 600, 435, space)
+        pygame.display.update()
+        time.sleep(0.8)
+        current_node.color = "black"
+
+        if value == current_node.data:
+            return current_node
+        elif value < current_node.data:
+            current_node = current_node.left_child
+        else:
+            current_node = current_node.right_child
+    # Se o valor não for encontrado na árvore, retorna None
+    return None
+
+# Função para encontrar o nó com o menor valor em uma subárvore
+def find_min_node(node):
+    while node.left_child is not None:
+        node = node.left_child
+    return node
+
+# Função para remover um nó de uma árvore binária de busca
+def remove_tree(value, root_node):
+    node_to_remove = find_node(value, root_node)
+    if node_to_remove is None:
+        # Se o nó não existir na árvore, não há nada para remover
+        return root_node
+    
+    if node_to_remove.left_child is None and node_to_remove.right_child is None:
+        # Se o nó não tiver filhos, basta removê-lo da árvore
+        if node_to_remove.parent is None:
+            # Se o nó a ser removido for a raiz, defina a raiz como None
+            root_node = None
+        elif node_to_remove.parent.left_child == node_to_remove:
+            node_to_remove.parent.left_child = None
+        else:
+            node_to_remove.parent.right_child = None
+            
+    elif node_to_remove.left_child is None:
+        # Se o nó a ser removido tiver apenas um filho à direita, substitua-o pelo seu filho
+        if node_to_remove.parent is None:
+            root_node = node_to_remove.right_child
+            root_node.parent = None
+        elif node_to_remove.parent.left_child == node_to_remove:
+            node_to_remove.parent.left_child = node_to_remove.right_child
+            node_to_remove.right_child.parent = node_to_remove.parent
+        else:
+            node_to_remove.parent.right_child = node_to_remove.right_child
+            node_to_remove.right_child.parent = node_to_remove.parent
+            
+    elif node_to_remove.right_child is None:
+        # Se o nó a ser removido tiver apenas um filho à esquerda, substitua-o pelo seu filho
+        if node_to_remove.parent is None:
+            root_node = node_to_remove.left_child
+            root_node.parent = None
+        elif node_to_remove.parent.left_child == node_to_remove:
+            node_to_remove.parent.left_child = node_to_remove.left_child
+            node_to_remove.left_child.parent = node_to_remove.parent
+        else:
+            node_to_remove.parent.right_child = node_to_remove.left_child
+            node_to_remove.left_child.parent = node_to_remove.parent
+            
+    else:
+        # Se o nó a ser removido tiver dois filhos, encontre o seu sucessor e substitua-o pelo nó a ser removido
+        successor = find_min_node(node_to_remove.right_child)
+        remove_tree(successor.data, node_to_remove.right_child)
+        node_to_remove.data = successor.data
+    
+    return root_node
+
+
+# Percorre a árvore e desenha cada nó na tela
+node_radius = 25
+height_difference = 100
+
+def draw_tree(node, x, y, space):
+    if node is not None:
+        pygame.draw.circle(tela, node.color, (x, y), node_radius)
+        node.x = x
+        node.y = y
+        font = pygame.font.Font(None, 25)
+        text = font.render(str(node.data), 1, "red")
+        textpos = text.get_rect(centerx=x, centery=y)
+        tela.blit(text, textpos)
+        if node.left_child is not None:
+            draw_arrow(tela, "red", (x, y+node_radius), (x-space, y+height_difference-node_radius))
+            draw_tree(node.left_child, x-space, y+height_difference, space/2)
+        if node.right_child is not None:
+            draw_arrow(tela, "red", (x, y+node_radius), (x+space, y+height_difference-node_radius))
+            draw_tree(node.right_child, x+space, y+height_difference, space/2)
+
+def get_height(root):
+    if root is None:
+        return 0
+    else:
+        left_height = get_height(root.left_child)
+        right_height = get_height(root.right_child)
+        return max(left_height, right_height) + 1
 #################################################################################################################################################
 ################################################              VARIAVEIS              ############################################################
 #################################################################################################################################################
@@ -903,6 +1085,10 @@ input_box13 = InputBox(550, 320, 190, 32)
 input_box14 = InputBox(910, 310, 200, 32)
 input_box15 = InputBox(910, 360, 200, 32)
 input_boxes3 = [input_box11, input_box12, input_box13, input_box14, input_box15]
+
+input_box16 = InputBox(335, 260, 170, 32)
+input_box17 = InputBox(735, 260, 190, 32)
+input_boxes4 = [input_box16, input_box17]
 
 offset_increment = 0
 offset_decrement = 0
@@ -935,6 +1121,9 @@ flag_erro7 = 0
 flag_erro8 = 0
 flag_erro9 = 0
 
+content16 = ''
+content17 = ''
+
 listaseq = listaSeq()
 imp = imprimeListaSeq(listaseq.dados)
 enable_procurar = 0
@@ -944,6 +1133,8 @@ mode_procurar = 0
 listaS = listaSE()
 
 listade = listaDE()
+
+root = None
 
 tela0 = pygame.image.load('tela0.png')
 tela1 = pygame.image.load('tela1.png')
@@ -1715,6 +1906,11 @@ while True:
 
                     content11 = ''
                     content12 = ''
+        if event.type == MOUSEBUTTONDOWN and 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359 and pagina == 6: #INSERIR PAGINA 6
+            content16 = input_box16.returnText()
+            if content16 != "":
+                root = insert(root, int(content16))
+                content16 = ''
         if event.type == MOUSEBUTTONDOWN and 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446 and pagina == 1: #REMOVER PAGINA 1
             content3 = input_box3.returnText()
 
@@ -1755,6 +1951,11 @@ while True:
                     flag_erro8 = 0
 
                     content13 = ''
+        if event.type == MOUSEBUTTONDOWN and 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358 and pagina == 6: #REMOVER PAGINA 6
+            content17 = input_box17.returnText()
+
+            if content17 != "":
+                root = remove_tree(int(content17), root)
         if event.type == MOUSEBUTTONDOWN and 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446 and pagina == 1: #CONSULTAR PAGINA 1
             content4 = input_box4.returnText()
             content5 = input_box5.returnText()
@@ -1865,6 +2066,10 @@ while True:
             if pagina == 3:
                 box.handle_event(event)
 
+        for box in input_boxes4:
+            if pagina == 6:
+                box.handle_event(event)
+
     for box in input_boxes1:
         box.update()
     
@@ -1872,6 +2077,9 @@ while True:
         box.update()
 
     for box in input_boxes3:
+        box.update()
+
+    for box in input_boxes4:
         box.update()
 
     if offset_increment:
@@ -2119,6 +2327,29 @@ while True:
     elif pagina == 6:
         tela.blit(tela6, (0, 0))
 
+        for box in input_boxes4:
+            box.draw(tela)
+
+        if 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359: #INSERIR
+            color2 = "black"
+
+        else:
+            color2 = "white"
+
+        pygame.draw.rect(tela, color2, (375, 327, 83, 32))
+        pygame.draw.rect(tela, "grey", (376, 328, 81, 30))
+        tela.blit(txt_inserir, (381, 333))
+
+        if 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358: #REMOVER
+            color3 = "black"
+
+        else:
+            color3 = "white"
+
+        pygame.draw.rect(tela, color3, (778, 328, 100, 32))
+        pygame.draw.rect(tela, "grey", (779, 329, 98, 30))
+        tela.blit(txt_remover, (784, 334))
+
         if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
             color1 = "black"
 
@@ -2126,5 +2357,10 @@ while True:
             color1 = "white"
 
         pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+
+        space = pow(2, get_height(root)-2) * node_radius
+
+        # Desenha a árvore
+        draw_tree(root, 600, 435, space)
 
     pygame.display.update()
