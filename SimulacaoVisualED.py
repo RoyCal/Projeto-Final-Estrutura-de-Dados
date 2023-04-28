@@ -1826,6 +1826,53 @@ def highlight_button(cd1, cd2, cd3, cd4):
     
     return color
 
+def highlight_boxes(b_arrows, b_consultar, b_pagina6 = 0):
+    if b_pagina6:
+        color2 = highlight_button(375, 458, 327, 359) #INSERIR
+
+        pygame.draw.rect(tela, color2, (375, 327, 83, 32))
+        pygame.draw.rect(tela, "grey", (376, 328, 81, 30))
+        tela.blit(txt_inserir, (381, 333))
+
+        color3 = highlight_button(778, 878, 328, 358) #INSERIR
+
+        pygame.draw.rect(tela, color3, (778, 328, 100, 32))
+        pygame.draw.rect(tela, "grey", (779, 329, 98, 30))
+        tela.blit(txt_remover, (784, 334))
+
+    else:
+        color2 = highlight_button(186, 269, 416, 446) #INSERIR
+
+        pygame.draw.rect(tela, color2, (185, 415, 83, 32))
+        pygame.draw.rect(tela, "grey", (186, 416, 81, 30))
+        tela.blit(txt_inserir, (191, 421))
+
+        color3 = highlight_button(586, 684, 416, 446) #REMOVER
+
+        pygame.draw.rect(tela, color3, (585, 415, 100, 32))
+        pygame.draw.rect(tela, "grey", (586, 416, 98, 30))
+        tela.blit(txt_remover, (591, 421))
+
+    if b_consultar:
+        color4 = highlight_button(956, 1069, 416, 446) #CONSULTAR
+
+        pygame.draw.rect(tela, color4, (955, 415, 115, 32))
+        pygame.draw.rect(tela, "grey", (956, 416, 113, 30))
+        tela.blit(txt_consultar, (961, 421))
+
+    if b_arrows:
+        color5 = highlight_button(473, 601, 790, 875) #SETA ESQUERDA
+
+        pygame.draw.rect(tela, color5, (473, 790, 128, 85), 2)
+
+        color6 = highlight_button(601, 729, 790, 875) #SETA DIREITA
+
+        pygame.draw.rect(tela, color6, (601, 790, 128, 85), 2)
+
+    color1 = highlight_button(20, 110, 20, 105) #VOLTAR PRA O MENU
+
+    pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+
 #################################################################################################################################################
 ################################################      LOOP      DO     JOGO      ################################################################
 #################################################################################################################################################
@@ -2120,43 +2167,7 @@ while True:
         if flag_erro3 == 1:
             tela.blit(txt_erro, (965, 200))
 
-        if 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446: #INSERIR
-            color2 = "black"
-
-        else:
-            color2 = "white"
-
-        pygame.draw.rect(tela, color2, (185, 415, 83, 32))
-        pygame.draw.rect(tela, "grey", (186, 416, 81, 30))
-        tela.blit(txt_inserir, (191, 421))
-
-        if 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446: #REMOVER
-            color3 = "black"
-
-        else:
-            color3 = "white"
-
-        pygame.draw.rect(tela, color3, (585, 415, 100, 32))
-        pygame.draw.rect(tela, "grey", (586, 416, 98, 30))
-        tela.blit(txt_remover, (591, 421))
-
-        if 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446: #CONSULTAR
-            color4 = "black"
-
-        else:
-            color4 = "white"
-
-        pygame.draw.rect(tela, color4, (955, 415, 115, 32))
-        pygame.draw.rect(tela, "grey", (956, 416, 113, 30))
-        tela.blit(txt_consultar, (961, 421))
-
-        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-            color1 = "black"
-
-        else:
-            color1 = "white"
-
-        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+        highlight_boxes(0, 1)
 
         for box in input_boxes1:
             box.draw(tela)
@@ -2167,14 +2178,6 @@ while True:
 
     elif pagina == 2: #LISTAS SIMPLESMENTE ENCADEADAS
         tela.blit(tela2, (0, 0))
-
-        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-            color1 = "black"
-
-        else:
-            color1 = "white"
-
-        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
         
         for box in input_boxes2:
             box.draw(tela)
@@ -2188,59 +2191,7 @@ while True:
         if flag_erro6 == 1:
             tela.blit(txt_erro, (965, 200))
 
-        if 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446: #INSERIR
-            color2 = "black"
-
-        else:
-            color2 = "white"
-
-        pygame.draw.rect(tela, color2, (185, 415, 83, 32))
-        pygame.draw.rect(tela, "grey", (186, 416, 81, 30))
-        tela.blit(txt_inserir, (191, 421))
-
-        if 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446: #REMOVER
-            color3 = "black"
-
-        else:
-            color3 = "white"
-
-        pygame.draw.rect(tela, color3, (585, 415, 100, 32))
-        pygame.draw.rect(tela, "grey", (586, 416, 98, 30))
-        tela.blit(txt_remover, (591, 421))
-
-        if 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446: #CONSULTAR
-            color4 = "black"
-
-        else:
-            color4 = "white"
-
-        pygame.draw.rect(tela, color4, (955, 415, 115, 32))
-        pygame.draw.rect(tela, "grey", (956, 416, 113, 30))
-        tela.blit(txt_consultar, (961, 421))
-
-        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-            color1 = "black"
-
-        else:
-            color1 = "white"
-
-        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
-
-        if 473 <= mouse[0] <= 601 and 790 <= mouse[1] <= 875:
-            color5 = "black"
-
-        else:
-            color5 = "white"
-
-        pygame.draw.rect(tela, color5, (473, 790, 128, 85), 2)
-
-        if 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875:
-            color6 = "black"
-
-        else:
-            color6 = "white"
-
-        pygame.draw.rect(tela, color6, (601, 790, 128, 85), 2)
+        highlight_boxes(1, 1)
 
         listaS.imprimirLista(offsetx)
 
@@ -2256,59 +2207,7 @@ while True:
         if flag_erro9 == 1:
             tela.blit(txt_erro, (965, 200))
 
-        if 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446: #INSERIR
-            color2 = "black"
-
-        else:
-            color2 = "white"
-
-        pygame.draw.rect(tela, color2, (185, 415, 83, 32))
-        pygame.draw.rect(tela, "grey", (186, 416, 81, 30))
-        tela.blit(txt_inserir, (191, 421))
-
-        if 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446: #REMOVER
-            color3 = "black"
-
-        else:
-            color3 = "white"
-
-        pygame.draw.rect(tela, color3, (585, 415, 100, 32))
-        pygame.draw.rect(tela, "grey", (586, 416, 98, 30))
-        tela.blit(txt_remover, (591, 421))
-
-        if 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446: #CONSULTAR
-            color4 = "black"
-
-        else:
-            color4 = "white"
-
-        pygame.draw.rect(tela, color4, (955, 415, 115, 32))
-        pygame.draw.rect(tela, "grey", (956, 416, 113, 30))
-        tela.blit(txt_consultar, (961, 421))
-
-        if 473 <= mouse[0] <= 601 and 790 <= mouse[1] <= 875:
-            color5 = "black"
-
-        else:
-            color5 = "white"
-
-        pygame.draw.rect(tela, color5, (473, 790, 128, 85), 2)
-
-        if 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875:
-            color6 = "black"
-
-        else:
-            color6 = "white"
-
-        pygame.draw.rect(tela, color6, (601, 790, 128, 85), 2)
-
-        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-            color1 = "black"
-
-        else:
-            color1 = "white"
-
-        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+        highlight_boxes(1, 1)
 
         listade.imprimirLista(offsetx)
 
@@ -2320,33 +2219,7 @@ while True:
         for box in input_boxes4:
             box.draw(tela)
 
-        if 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359: #INSERIR
-            color2 = "black"
-
-        else:
-            color2 = "white"
-
-        pygame.draw.rect(tela, color2, (375, 327, 83, 32))
-        pygame.draw.rect(tela, "grey", (376, 328, 81, 30))
-        tela.blit(txt_inserir, (381, 333))
-
-        if 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358: #REMOVER
-            color3 = "black"
-
-        else:
-            color3 = "white"
-
-        pygame.draw.rect(tela, color3, (778, 328, 100, 32))
-        pygame.draw.rect(tela, "grey", (779, 329, 98, 30))
-        tela.blit(txt_remover, (784, 334))
-
-        if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-            color1 = "black"
-
-        else:
-            color1 = "white"
-
-        pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+        highlight_boxes(0, 0, 1)
 
         space = pow(2, get_height(root)-2) * node_radius
 
