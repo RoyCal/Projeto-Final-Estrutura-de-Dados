@@ -2135,95 +2135,95 @@ while True:
 #################################################################################################################################################
 ##############################################################      PAGINAS      ################################################################
 #################################################################################################################################################
+    match pagina:
+        case 0: #MENU
+            tela.blit(tela0, (0, 0))
 
-    if pagina == 0: #MENU
-        tela.blit(tela0, (0, 0))
+            color1 = highlight_button(210, 685, 270, 345)
 
-        color1 = highlight_button(210, 685, 270, 345)
+            color2 = highlight_button(210, 1045, 365, 440)
 
-        color2 = highlight_button(210, 1045, 365, 440)
+            color3 = highlight_button(210, 1010, 470, 545)
 
-        color3 = highlight_button(210, 1010, 470, 545)
+            color4 = highlight_button(210, 850, 765, 840)
 
-        color4 = highlight_button(210, 850, 765, 840)
+            pygame.draw.rect(tela, color1, (210, 270, 475, 75), 2)
 
-        pygame.draw.rect(tela, color1, (210, 270, 475, 75), 2)
+            pygame.draw.rect(tela, color2, (210, 365, 835, 75), 2)
 
-        pygame.draw.rect(tela, color2, (210, 365, 835, 75), 2)
+            pygame.draw.rect(tela, color3, (210, 470, 800, 75), 2)
 
-        pygame.draw.rect(tela, color3, (210, 470, 800, 75), 2)
+            pygame.draw.rect(tela, color4, (210, 765, 640, 75), 2)
 
-        pygame.draw.rect(tela, color4, (210, 765, 640, 75), 2)
+        case 1: #LISTAS SEQUENCIAIS
+            tela.blit(tela1, (0, 0))
+            
+            if flag_erro1 == 1:
+                tela.blit(txt_erro, (200, 200))
 
-    elif pagina == 1: #LISTAS SEQUENCIAIS
-        tela.blit(tela1, (0, 0))
-        
-        if flag_erro1 == 1:
-            tela.blit(txt_erro, (200, 200))
+            if flag_erro2 == 1:
+                tela.blit(txt_erro, (610, 200))
 
-        if flag_erro2 == 1:
-            tela.blit(txt_erro, (610, 200))
+            if flag_erro3 == 1:
+                tela.blit(txt_erro, (965, 200))
 
-        if flag_erro3 == 1:
-            tela.blit(txt_erro, (965, 200))
+            highlight_boxes(0, 1)
 
-        highlight_boxes(0, 1)
+            for box in input_boxes1:
+                box.draw(tela)
 
-        for box in input_boxes1:
-            box.draw(tela)
+            imp.imprimir()
+            imp.procurar(enable_procurar, mode_procurar, valor_procurar)
+            enable_procurar = 0
 
-        imp.imprimir()
-        imp.procurar(enable_procurar, mode_procurar, valor_procurar)
-        enable_procurar = 0
+        case 2: #LISTAS SIMPLESMENTE ENCADEADAS
+            tela.blit(tela2, (0, 0))
+            
+            for box in input_boxes2:
+                box.draw(tela)
 
-    elif pagina == 2: #LISTAS SIMPLESMENTE ENCADEADAS
-        tela.blit(tela2, (0, 0))
-        
-        for box in input_boxes2:
-            box.draw(tela)
+            if flag_erro4 == 1:
+                tela.blit(txt_erro, (200, 200))
 
-        if flag_erro4 == 1:
-            tela.blit(txt_erro, (200, 200))
+            if flag_erro5 == 1:
+                tela.blit(txt_erro, (610, 200))
 
-        if flag_erro5 == 1:
-            tela.blit(txt_erro, (610, 200))
+            if flag_erro6 == 1:
+                tela.blit(txt_erro, (965, 200))
 
-        if flag_erro6 == 1:
-            tela.blit(txt_erro, (965, 200))
+            highlight_boxes(1, 1)
 
-        highlight_boxes(1, 1)
+            listaS.imprimirLista(offsetx)
 
-        listaS.imprimirLista(offsetx)
+        case 3: #LISTA DUPLAMENTE ENCADEADA
+            tela.blit(tela3, (0, 0))
 
-    elif pagina == 3: #LISTA DUPLAMENTE ENCADEADA
-        tela.blit(tela3, (0, 0))
+            if flag_erro7 == 1:
+                tela.blit(txt_erro, (200, 200))
 
-        if flag_erro7 == 1:
-            tela.blit(txt_erro, (200, 200))
+            if flag_erro8 == 1:
+                tela.blit(txt_erro, (610, 200))
 
-        if flag_erro8 == 1:
-            tela.blit(txt_erro, (610, 200))
+            if flag_erro9 == 1:
+                tela.blit(txt_erro, (965, 200))
 
-        if flag_erro9 == 1:
-            tela.blit(txt_erro, (965, 200))
+            highlight_boxes(1, 1)
 
-        highlight_boxes(1, 1)
+            listade.imprimirLista(offsetx)
 
-        listade.imprimirLista(offsetx)
+            for box in input_boxes3:
+                box.draw(tela)
+        case 6:
+            tela.blit(tela6, (0, 0))
 
-        for box in input_boxes3:
-            box.draw(tela)
-    elif pagina == 6:
-        tela.blit(tela6, (0, 0))
+            for box in input_boxes4:
+                box.draw(tela)
 
-        for box in input_boxes4:
-            box.draw(tela)
+            highlight_boxes(0, 0, 1)
 
-        highlight_boxes(0, 0, 1)
+            space = pow(2, get_height(root)-2) * node_radius
 
-        space = pow(2, get_height(root)-2) * node_radius
-
-        # Desenha a árvore
-        draw_tree(root, 600, 435, space)
+            # Desenha a árvore
+            draw_tree(root, 600, 435, space)
 
     pygame.display.update()
