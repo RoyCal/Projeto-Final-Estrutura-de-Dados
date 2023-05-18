@@ -22,7 +22,7 @@ altura = 960
 
 tela = pygame.display.set_mode((largura, altura))
 tela.fill((255, 255, 255))
-pygame.display.set_caption('Listas') 
+pygame.display.set_caption('Listas')
 
 #FONTES
 
@@ -890,33 +890,25 @@ def print_tela_arvore():
     for box in input_boxes4:
         box.draw(tela)
 
-    if 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359: #INSERIR
-        color2 = "black"
-
-    else:
-        color2 = "white"
-
-    pygame.draw.rect(tela, color2, (375, 327, 83, 32))
     pygame.draw.rect(tela, "grey", (376, 328, 81, 30))
     tela.blit(txt_inserir, (381, 333))
 
-    if 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358: #REMOVER
-        color3 = "black"
-
-    else:
-        color3 = "white"
-
-    pygame.draw.rect(tela, color3, (778, 328, 100, 32))
     pygame.draw.rect(tela, "grey", (779, 329, 98, 30))
     tela.blit(txt_remover, (784, 334))
 
-    if 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105:
-        color1 = "black"
-
-    else:
-        color1 = "white"
-
     pygame.draw.rect(tela, color1, (20, 20, 90, 85), 2)
+
+    pygame.draw.rect(tela, "grey", (1064, 459, 113, 30))
+    tela.blit(txt_consultar, (1068, 464))
+
+    pygame.draw.rect(tela, "grey", (69, 421, 118, 30))
+    tela.blit(txt_preordem, (73, 426))
+
+    pygame.draw.rect(tela, "grey", (69, 485, 108, 30))
+    tela.blit(txt_emordem, (73, 490))
+
+    pygame.draw.rect(tela, "grey", (69, 549, 123, 30))
+    tela.blit(txt_posordem, (73, 554))
 
 def insert(root_node, value):
     new_node = Node(value)
@@ -928,7 +920,7 @@ def insert(root_node, value):
             current_node.color = "blue"
             space = pow(2, get_height(root)-2) * node_radius
             print_tela_arvore()
-            draw_tree(root, 600, 435, space)
+            draw_tree(root, x_raiz, y_raiz, space)
             pygame.display.update()
             time.sleep(0.8)
             current_node.color = "black"
@@ -952,23 +944,33 @@ def insert(root_node, value):
 
     return root_node
 
-def find_node(value, root_node):
+def find_node(value, root_node, procurar=False):
     current_node = root_node
     while current_node is not None:
         current_node.color = "blue"
         space = pow(2, get_height(root)-2) * node_radius
         print_tela_arvore()
-        draw_tree(root, 600, 435, space)
+        draw_tree(root, x_raiz, y_raiz, space)
         pygame.display.update()
         time.sleep(0.8)
         current_node.color = "black"
 
         if value == current_node.data:
+            if procurar:
+                current_node.color = "green"
+                space = pow(2, get_height(root)-2) * node_radius
+                print_tela_arvore()
+                draw_tree(root, x_raiz, y_raiz, space)
+                pygame.display.update()
+                time.sleep(1)
+                current_node.color = "black"
+
             return current_node
         elif value < current_node.data:
             current_node = current_node.left_child
         else:
             current_node = current_node.right_child
+
     return None
 
 def find_min_node(node):
@@ -1021,6 +1023,71 @@ def remove_tree(value, root_node):
     
     return root_node
 
+def preordem(node, string):
+    if node is not None:
+        
+        string += str(node.data) + ", "
+        texto = FONT.render(string, True, "green")
+        node.color = "blue"
+        space = pow(2, get_height(root)-2) * node_radius
+        print_tela_arvore()
+        draw_tree(root, x_raiz, y_raiz, space)
+        tela.blit(texto, (427, 386))
+        pygame.display.update()
+        time.sleep(0.8)
+        node.color = "black"
+
+        string = preordem(node.left_child, string)
+        string = preordem(node.right_child, string)
+    
+    for event in pygame.event.get():
+        pass
+
+    return string
+
+def emordem(node, string):
+    if node is not None:
+        string = emordem(node.left_child, string)
+        
+        string += str(node.data) + ", "
+        texto = FONT.render(string, True, "green")
+        node.color = "blue"
+        space = pow(2, get_height(root)-2) * node_radius
+        print_tela_arvore()
+        draw_tree(root, x_raiz, y_raiz, space)
+        tela.blit(texto, (427, 386))
+        pygame.display.update()
+        time.sleep(0.8)
+        node.color = "black"
+
+        string = emordem(node.right_child, string)
+
+    for event in pygame.event.get():
+        pass
+
+    return string
+
+def posordem(node, string):
+    if node is not None:
+        string = posordem(node.left_child, string)
+        string = posordem(node.right_child, string)
+
+        string += str(node.data) + ", "
+        texto = FONT.render(string, True, "green")
+        node.color = "blue"
+        space = pow(2, get_height(root)-2) * node_radius
+        print_tela_arvore()
+        draw_tree(root, x_raiz, y_raiz, space)
+        tela.blit(texto, (427, 386))
+        pygame.display.update()
+        time.sleep(0.8)
+        node.color = "black"
+
+    for event in pygame.event.get():
+        pass  
+
+    return string
+
 node_radius = 25
 height_difference = 100
 
@@ -1056,6 +1123,9 @@ txt_inserir = FONT.render("inserir", True, "black")
 txt_remover = FONT.render("remover", True, "black")
 txt_consultar = FONT.render("consultar", True, "black")
 txt_erro = FONT.render("ERRO", True, "red")
+txt_preordem = FONT.render("pre-ordem", True, "black")
+txt_emordem = FONT.render("in-ordem", True, "black")
+txt_posordem = FONT.render("pos-ordem", True, "black")
 
 input_box1 = InputBox(145, 310, 170, 32)
 input_box2 = InputBox(145, 360, 170, 32)
@@ -1080,7 +1150,12 @@ input_boxes3 = [input_box11, input_box12, input_box13, input_box14, input_box15]
 
 input_box16 = InputBox(335, 260, 170, 32)
 input_box17 = InputBox(735, 260, 190, 32)
-input_boxes4 = [input_box16, input_box17]
+input_box18 = InputBox(1019, 400, 200, 32)
+input_boxes4 = [input_box16, input_box17, input_box18]
+
+seguir_mouse = False
+x_raiz = 600
+y_raiz = 470
 
 offset_increment = 0
 offset_decrement = 0
@@ -1115,6 +1190,7 @@ flag_erro9 = 0
 
 content16 = ''
 content17 = ''
+content18 = ''
 
 listaseq = listaSeq()
 imp = imprimeListaSeq(listaseq.dados)
@@ -1877,13 +1953,25 @@ def highlight_boxes(b_arrows, b_consultar, b_pagina6 = 0):
 ################################################      LOOP      DO     JOGO      ################################################################
 #################################################################################################################################################
 
+mousex_anterior = 0
+mousey_anterior = 0
+
 while True:
     relogio.tick(60)
 
     mouse = pygame.mouse.get_pos()
 
+    mousex_atual = mouse[0]
+    mousey_atual = mouse[1]
+
+    deltax_mouse = mousex_atual - mousex_anterior
+    deltay_mouse = mousey_atual - mousey_anterior
+
+    mousex_anterior = mouse[0]
+    mousey_anterior = mouse[1]
+
     for event in pygame.event.get(): #EVENTOS
-        if event.type == QUIT:
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             pygame.quit()
             exit()
         if event.type == KEYDOWN: 
@@ -1897,6 +1985,8 @@ while True:
         # if event.type == MOUSEBUTTONDOWN:
         #     print("X: ", mouse[0])
         #     print("Y: ", mouse[1])
+        if event.type == MOUSEBUTTONDOWN and pagina == 6:
+            seguir_mouse = True
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345 and pagina == 0: #BOTAO PAGINA 1
             pagina = 1
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 1045 and 365 <= mouse[1] <= 440 and pagina == 0: #BOTAO PAGINA 2
@@ -1952,6 +2042,8 @@ while True:
                     content11 = ''
                     content12 = ''
         if event.type == MOUSEBUTTONDOWN and 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359 and pagina == 6: #INSERIR PAGINA 6
+            seguir_mouse = False
+        
             content16 = input_box16.returnText()
             if content16 != "":
                 root = insert(root, int(content16))
@@ -1997,6 +2089,8 @@ while True:
 
                     content13 = ''
         if event.type == MOUSEBUTTONDOWN and 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358 and pagina == 6: #REMOVER PAGINA 6
+            seguir_mouse = False
+            
             content17 = input_box17.returnText()
 
             if content17 != "":
@@ -2061,6 +2155,8 @@ while True:
                 input_box10.text = ''
                 input_box10.txt_surface = FONT.render(input_box10.text, True, input_box10.color)
         if event.type == MOUSEBUTTONDOWN and 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446 and pagina == 3: #CONSULTAR PAGINA 3
+            seguir_mouse = False
+
             content14 = input_box14.returnText()
             content15 = input_box15.returnText()
 
@@ -2088,7 +2184,36 @@ while True:
                 input_box14.txt_surface = FONT.render(input_box14.text, True, input_box14.color)
                 input_box15.text = ''
                 input_box15.txt_surface = FONT.render(input_box15.text, True, input_box15.color)
+        
+        if event.type == MOUSEBUTTONDOWN and 1063 <= mouse[0] <= 1176 and 458 <= mouse[1] <= 490 and pagina == 6: #CONSULTAR PAGINA 6
+            seguir_mouse = False
+            
+            content18 = input_box18.returnText()
 
+            if content18 != "":
+                find_node(int(content18), root, True)
+
+            for event in pygame.event.get():
+                pass
+
+        if event.type == MOUSEBUTTONDOWN and 68 <= mouse[0] <= 188 and 420 <= mouse[1] <= 452 and pagina == 6: #PRE ORDEM
+            seguir_mouse = False
+
+            preordem(root, "")
+        
+        if event.type == MOUSEBUTTONDOWN and 68 <= mouse[0] <= 178 and 484 <= mouse[1] <= 516 and pagina == 6: #EM ORDEM
+            seguir_mouse = False
+
+            emordem(root, "")
+
+        if event.type == MOUSEBUTTONDOWN and 68 <= mouse[0] <= 193 and 548 <= mouse[1] <= 580 and pagina == 6: #POS ORDEM
+            seguir_mouse = False
+
+            posordem(root, "")
+
+        if event.type == MOUSEBUTTONUP and pagina == 6:
+            seguir_mouse = False
+            
         if event.type == MOUSEBUTTONDOWN and 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875 and (pagina == 2 or pagina == 3): #MOVER A LISTA PARA DIREITA
             offset_increment = 1
         if event.type == MOUSEBUTTONDOWN and 473 <= mouse[0] <= 601 and 790 <= mouse[1] <= 875 and (pagina == 2 or pagina == 3): #MOVER A LISTA PARA ESQUERDA
@@ -2216,14 +2341,42 @@ while True:
         case 6:
             tela.blit(tela6, (0, 0))
 
+            space = pow(2, get_height(root)-2) * node_radius
+
+            # Desenha a árvore
+            if seguir_mouse:
+                x_raiz += deltax_mouse
+                y_raiz += deltay_mouse
+
+            draw_tree(root, x_raiz, y_raiz, space)
+
             for box in input_boxes4:
                 box.draw(tela)
 
             highlight_boxes(0, 0, 1)
 
-            space = pow(2, get_height(root)-2) * node_radius
+            color4 = highlight_button(1063, 1176, 458, 490) #CONSULTAR
 
-            # Desenha a árvore
-            draw_tree(root, 600, 435, space)
+            pygame.draw.rect(tela, color4, (1063, 458, 115, 32))
+            pygame.draw.rect(tela, "grey", (1064, 459, 113, 30))
+            tela.blit(txt_consultar, (1068, 464))
+
+            color4 = highlight_button(68, 188, 420, 452) #PRE ORDEM
+
+            pygame.draw.rect(tela, color4, (68, 420, 120, 32))
+            pygame.draw.rect(tela, "grey", (69, 421, 118, 30))
+            tela.blit(txt_preordem, (73, 426))
+
+            color4 = highlight_button(68, 178, 484, 516) #EM ORDEM
+
+            pygame.draw.rect(tela, color4, (68, 484, 110, 32))
+            pygame.draw.rect(tela, "grey", (69, 485, 108, 30))
+            tela.blit(txt_emordem, (73, 490))
+
+            color4 = highlight_button(68, 193, 548, 580) #POS ORDEM
+
+            pygame.draw.rect(tela, color4, (68, 548, 125, 32))
+            pygame.draw.rect(tela, "grey", (69, 549, 123, 30))
+            tela.blit(txt_posordem, (73, 554))
 
     pygame.display.update()
