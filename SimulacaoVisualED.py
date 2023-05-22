@@ -1114,6 +1114,62 @@ def get_height(root):
         left_height = get_height(root.left_child)
         right_height = get_height(root.right_child)
         return max(left_height, right_height) + 1
+    
+class Elemento_pilha:
+    def __init__(self, x, y, dado):
+        self.x = x
+        self.y = y
+        self.data = dado
+        self.dado = FONT.render(str(dado), True, "black")
+        self.color = "cyan"
+
+    def draw(self):
+        if self.y < altura - 15:
+            rectang = pygame.draw.rect(tela, self.color, (self.x, self.y, 100, 30))
+            pygame.draw.rect(tela, 'black', (self.x, self.y, 100, 30), 2)
+            textpos = self.dado.get_rect(centerx=rectang.centerx, centery=rectang.centery)
+            tela.blit(self.dado, textpos)
+
+class Pilha:
+    def __init__(self):
+        self.x = largura // 2 - 50
+        self.y = altura // 2
+        self.dados = []
+        self.nElementos = 0
+        self.consultar = False
+
+    def inserir(self, valor):
+        self.dados.append(valor)
+
+        i = self.nElementos
+
+        for elemento in self.dados:
+            elemento.y += 30
+
+            i -= 1
+
+        self.nElementos += 1
+
+    def remover(self):
+        if self.nElementos:
+            self.dados.pop()
+
+            i = self.nElementos
+
+            for elemento in self.dados:
+                elemento.y -= 30
+
+                i -= 1
+
+            self.nElementos -= 1
+
+    def draw(self):
+        for elemento in self.dados:
+            elemento.draw()
+
+    def draw_topo(self):
+        if self.nElementos:
+            self.consultar = True
 
 #################################################################################################################################################
 ################################################              VARIAVEIS              ############################################################
@@ -1132,26 +1188,28 @@ input_box2 = InputBox(145, 360, 170, 32)
 input_box3 = InputBox(550, 320, 190, 32)
 input_box4 = InputBox(910, 310, 200, 32)
 input_box5 = InputBox(910, 360, 200, 32)
-input_boxes1 = [input_box1, input_box2, input_box3, input_box4, input_box5]
+input_boxes1 = [input_box1, input_box2, input_box3, input_box4, input_box5] #LISTAS SEQUENCIAIS
 
 input_box6 = InputBox(145, 310, 170, 32)
 input_box7 = InputBox(145, 360, 170, 32)
 input_box8 = InputBox(550, 320, 190, 32)
 input_box9 = InputBox(910, 310, 200, 32)
 input_box10 = InputBox(910, 360, 200, 32)
-input_boxes2 = [input_box6, input_box7, input_box8, input_box9, input_box10]
+input_boxes2 = [input_box6, input_box7, input_box8, input_box9, input_box10] #LISTAS SIMPLESMENTE ENCADEADA
 
 input_box11 = InputBox(145, 310, 170, 32)
 input_box12 = InputBox(145, 360, 170, 32)
 input_box13 = InputBox(550, 320, 190, 32)
 input_box14 = InputBox(910, 310, 200, 32)
 input_box15 = InputBox(910, 360, 200, 32)
-input_boxes3 = [input_box11, input_box12, input_box13, input_box14, input_box15]
+input_boxes3 = [input_box11, input_box12, input_box13, input_box14, input_box15] #LISTAS DUPLAMENTE ENCADEADAS
 
 input_box16 = InputBox(335, 260, 170, 32)
 input_box17 = InputBox(735, 260, 190, 32)
 input_box18 = InputBox(1019, 400, 200, 32)
-input_boxes4 = [input_box16, input_box17, input_box18]
+input_boxes4 = [input_box16, input_box17, input_box18] #ARVORE BINARIA DE BUSCA
+
+input_box19 = InputBox(145, 310, 170, 32)
 
 seguir_mouse = False
 x_raiz = 600
@@ -1192,6 +1250,8 @@ content16 = ''
 content17 = ''
 content18 = ''
 
+content19 = ''
+
 listaseq = listaSeq()
 imp = imprimeListaSeq(listaseq.dados)
 enable_procurar = 0
@@ -1204,10 +1264,13 @@ listade = listaDE()
 
 root = None
 
+pilha = Pilha()
+
 tela0 = pygame.image.load('tela0.png')
 tela1 = pygame.image.load('tela1.png')
 tela2 = pygame.image.load('tela2.png')
 tela3 = pygame.image.load('tela3.png')
+tela4 = pygame.image.load('tela4.png')
 tela6 = pygame.image.load('tela6.png')
 
 pagina = 0
@@ -1982,10 +2045,24 @@ while True:
                     offsetx = -240*(listaS.tamanho()-5)
                 elif pagina == 3:
                     offsetx = -240*(listade.tamanho()-5)
-        # if event.type == MOUSEBUTTONDOWN:
-        #     print("X: ", mouse[0])
-        #     print("Y: ", mouse[1])
-        if event.type == MOUSEBUTTONDOWN and pagina == 6:
+            if event.key == K_r:
+                if pagina == 6:
+                    x_raiz = 600
+                    y_raiz = 470
+                elif pagina == 4:
+                    pilha.y = altura // 2
+
+                    i = pilha.nElementos
+
+                    for elemento in pilha.dados:
+                        elemento.y = pilha.y + 30*i
+
+                        i -= 1
+            
+        if event.type == MOUSEBUTTONDOWN:
+            print("X: ", mouse[0])
+            print("Y: ", mouse[1])
+        if event.type == MOUSEBUTTONDOWN and (pagina == 6 or pagina == 4):
             seguir_mouse = True
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345 and pagina == 0: #BOTAO PAGINA 1
             pagina = 1
@@ -1995,9 +2072,11 @@ while True:
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 1010 and 470 <= mouse[1] <= 545 and pagina == 0: #BOTAO PAGINA 3
             pagina = 3
             offsetx = 0
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 416 and 570 <= mouse[1] <= 645 and pagina == 0: #BOTAO PAGINA 4
+            pagina = 4
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 850 and 765 <= mouse[1] <= 840 and pagina == 0: #BOTAO PAGINA 6
             pagina = 6
-        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3 or pagina == 6): #BOTAO VOLTAR MENU
+        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3 or pagina == 6 or pagina == 4): #BOTAO VOLTAR MENU
             pagina = 0
         if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 1: #INSERIR PAGINA 1
             content1 = input_box1.returnText()
@@ -2041,6 +2120,16 @@ while True:
 
                     content11 = ''
                     content12 = ''
+        if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 4: #INSERIR PAGINA 4
+            seguir_mouse = False
+
+            content19 = input_box19.returnText()
+
+            if content19 != "":
+                elemento = Elemento_pilha(pilha.x, pilha.y, content19)
+
+                pilha.inserir(elemento)
+
         if event.type == MOUSEBUTTONDOWN and 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359 and pagina == 6: #INSERIR PAGINA 6
             seguir_mouse = False
         
@@ -2088,6 +2177,10 @@ while True:
                     flag_erro8 = 0
 
                     content13 = ''
+        if event.type == MOUSEBUTTONDOWN and 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446 and pagina == 4: #REMOVER PAGINA 4
+            seguir_mouse = False
+
+            pilha.remover()
         if event.type == MOUSEBUTTONDOWN and 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358 and pagina == 6: #REMOVER PAGINA 6
             seguir_mouse = False
             
@@ -2184,7 +2277,10 @@ while True:
                 input_box14.txt_surface = FONT.render(input_box14.text, True, input_box14.color)
                 input_box15.text = ''
                 input_box15.txt_surface = FONT.render(input_box15.text, True, input_box15.color)
-        
+        if event.type == MOUSEBUTTONDOWN and 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446 and pagina == 4: #CONSULTAR PAGINA 4
+            seguir_mouse = False
+
+            pilha.draw_topo()
         if event.type == MOUSEBUTTONDOWN and 1063 <= mouse[0] <= 1176 and 458 <= mouse[1] <= 490 and pagina == 6: #CONSULTAR PAGINA 6
             seguir_mouse = False
             
@@ -2211,7 +2307,7 @@ while True:
 
             posordem(root, "")
 
-        if event.type == MOUSEBUTTONUP and pagina == 6:
+        if event.type == MOUSEBUTTONUP and (pagina == 6 or pagina == 4):
             seguir_mouse = False
             
         if event.type == MOUSEBUTTONDOWN and 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875 and (pagina == 2 or pagina == 3): #MOVER A LISTA PARA DIREITA
@@ -2236,6 +2332,9 @@ while True:
             if pagina == 3:
                 box.handle_event(event)
 
+        if pagina == 4:
+            input_box19.handle_event(event)
+
         for box in input_boxes4:
             if pagina == 6:
                 box.handle_event(event)
@@ -2248,6 +2347,8 @@ while True:
 
     for box in input_boxes3:
         box.update()
+
+    input_box19.update()
 
     for box in input_boxes4:
         box.update()
@@ -2270,6 +2371,8 @@ while True:
 
             color3 = highlight_button(210, 1010, 470, 545)
 
+            color5 = highlight_button(210, 416, 570, 645)
+
             color4 = highlight_button(210, 850, 765, 840)
 
             pygame.draw.rect(tela, color1, (210, 270, 475, 75), 2)
@@ -2277,6 +2380,8 @@ while True:
             pygame.draw.rect(tela, color2, (210, 365, 835, 75), 2)
 
             pygame.draw.rect(tela, color3, (210, 470, 800, 75), 2)
+
+            pygame.draw.rect(tela, color5, (210, 570, 206, 75), 2)
 
             pygame.draw.rect(tela, color4, (210, 765, 640, 75), 2)
 
@@ -2338,6 +2443,27 @@ while True:
 
             for box in input_boxes3:
                 box.draw(tela)
+        case 4:
+            tela.blit(tela4, (0, 0))
+
+            pilha.draw()
+
+            input_box19.draw(tela)
+
+            highlight_boxes(0, 1)
+
+            if pilha.consultar:
+                topo = pilha.dados[-1].dado
+                tela.blit(topo, (978, 313))
+                pygame.display.update()
+                time.sleep(2)
+                pilha.consultar = False
+
+            if seguir_mouse:
+                pilha.y += deltay_mouse
+
+                for elemento in pilha.dados:
+                    elemento.y += deltay_mouse
         case 6:
             tela.blit(tela6, (0, 0))
 

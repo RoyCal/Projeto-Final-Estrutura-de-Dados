@@ -4,6 +4,7 @@
 - Listas sequenciais
 - Listas simplesmente encadeadas
 - Listas duplamente encadeadas
+- Pilhas
 - Árvore binária de busca
 
 ## Requirements:
