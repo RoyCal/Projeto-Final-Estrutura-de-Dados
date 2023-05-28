@@ -1257,9 +1257,9 @@ input_box17 = InputBox(735, 260, 190, 32)
 input_box18 = InputBox(1019, 400, 200, 32)
 input_boxes4 = [input_box16, input_box17, input_box18] #ARVORE BINARIA DE BUSCA
 
-input_box19 = InputBox(145, 310, 170, 32)
+input_box19 = InputBox(145, 310, 170, 32) #PILHA
 
-input_box20 = InputBox(145, 310, 170, 32) 
+input_box20 = InputBox(145, 310, 170, 32) #FILA
 
 seguir_mouse = False
 x_raiz = 600
@@ -2100,7 +2100,7 @@ while True:
                     offsetx = -240*(listaS.tamanho()-5)
                 elif pagina == 3:
                     offsetx = -240*(listade.tamanho()-5)
-            if event.key == K_r:
+            if event.key == K_r: #RESETAR A POSICAO DA PILHA, FILA E ARVORE
                 if pagina == 6:
                     x_raiz = 600
                     y_raiz = 470
@@ -2396,7 +2396,7 @@ while True:
 
             posordem(root, "")
 
-        if event.type == MOUSEBUTTONUP and (pagina == 6 or pagina == 4 or pagina == 5):
+        if event.type == MOUSEBUTTONUP and (pagina == 6 or pagina == 4 or pagina == 5): #PARAR DE SEGUIR O MOUSE
             seguir_mouse = False
             
         if event.type == MOUSEBUTTONDOWN and 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875 and (pagina == 2 or pagina == 3): #MOVER A LISTA PARA DIREITA
@@ -2541,7 +2541,7 @@ while True:
 
             for box in input_boxes3:
                 box.draw(tela)
-        case 4:
+        case 4: #PILHA
             tela.blit(tela4, (0, 0))
 
             pilha.draw()
@@ -2562,7 +2562,7 @@ while True:
 
                 for elemento in pilha.dados:
                     elemento.y += deltay_mouse
-        case 5:
+        case 5: #FILA
             tela.blit(tela5, (0, 0))
 
             input_box20.draw(tela)
@@ -2583,7 +2583,7 @@ while True:
 
                 for elemento in fila.dados:
                     elemento.x += deltax_mouse
-        case 6:
+        case 6: #ARVORE BINARIA DE BUSCA
             tela.blit(tela6, (0, 0))
 
             space = pow(2, get_height(root)-2) * node_radius
