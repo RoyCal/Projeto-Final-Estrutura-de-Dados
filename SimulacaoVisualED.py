@@ -1141,12 +1141,8 @@ class Pilha:
     def inserir(self, valor):
         self.dados.append(valor)
 
-        i = self.nElementos
-
         for elemento in self.dados:
             elemento.y += 30
-
-            i -= 1
 
         self.nElementos += 1
 
@@ -1160,6 +1156,58 @@ class Pilha:
                 elemento.y -= 30
 
                 i -= 1
+
+            self.nElementos -= 1
+
+    def draw(self):
+        for elemento in self.dados:
+            elemento.draw()
+
+    def draw_topo(self):
+        if self.nElementos:
+            self.consultar = True
+
+class Elemento_fila:
+    def __init__(self, x, y, dado):
+        self.x = x
+        self.y = y
+        self.data = dado
+        self.dado = FONT.render(str(dado), True, "black")
+        self.color = "cyan"
+
+    def draw(self):
+        if self.x > -50:
+            rectang = pygame.draw.rect(tela, self.color, (self.x, self.y, 100, 30))
+            pygame.draw.rect(tela, 'black', (self.x, self.y, 100, 30), 2)
+            textpos = self.dado.get_rect(centerx=rectang.centerx, centery=rectang.centery)
+            tela.blit(self.dado, textpos)
+
+class Fila:
+    def __init__(self):
+        self.x = largura // 2 - 50
+        self.y = 640
+        self.dados = []
+        self.nElementos = 0
+        self.consultar = False
+    
+    def inserir(self, valor):
+        self.dados.append(valor)
+
+        i = 0
+
+        for elemento in self.dados:
+            elemento.x = self.x - 100*i
+
+            i += 1
+
+        self.nElementos += 1
+
+    def remover(self):
+        if self.nElementos:
+            self.dados.pop(0)
+
+            for elemento in self.dados:
+                elemento.x += 100
 
             self.nElementos -= 1
 
@@ -1211,6 +1259,8 @@ input_boxes4 = [input_box16, input_box17, input_box18] #ARVORE BINARIA DE BUSCA
 
 input_box19 = InputBox(145, 310, 170, 32)
 
+input_box20 = InputBox(145, 310, 170, 32) 
+
 seguir_mouse = False
 x_raiz = 600
 y_raiz = 470
@@ -1252,6 +1302,8 @@ content18 = ''
 
 content19 = ''
 
+content20 = ''
+
 listaseq = listaSeq()
 imp = imprimeListaSeq(listaseq.dados)
 enable_procurar = 0
@@ -1266,11 +1318,14 @@ root = None
 
 pilha = Pilha()
 
+fila = Fila()
+
 tela0 = pygame.image.load('tela0.png')
 tela1 = pygame.image.load('tela1.png')
 tela2 = pygame.image.load('tela2.png')
 tela3 = pygame.image.load('tela3.png')
 tela4 = pygame.image.load('tela4.png')
+tela5 = pygame.image.load('tela5.png')
 tela6 = pygame.image.load('tela6.png')
 
 pagina = 0
@@ -2058,11 +2113,21 @@ while True:
                         elemento.y = pilha.y + 30*i
 
                         i -= 1
+                elif pagina == 5:
+                    fila.x = largura // 2 - 50
+                    fila.y = 640
+
+                    i = 0
+
+                    for elemento in fila.dados:
+                        elemento.x = fila.x - 100*i
+
+                        i += 1
             
-        if event.type == MOUSEBUTTONDOWN:
+        if event.type == MOUSEBUTTONDOWN: #printa as coordenadas do mouse para facilitar a implementacao
             print("X: ", mouse[0])
             print("Y: ", mouse[1])
-        if event.type == MOUSEBUTTONDOWN and (pagina == 6 or pagina == 4):
+        if event.type == MOUSEBUTTONDOWN and (pagina == 6 or pagina == 4 or pagina == 5):
             seguir_mouse = True
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345 and pagina == 0: #BOTAO PAGINA 1
             pagina = 1
@@ -2074,9 +2139,11 @@ while True:
             offsetx = 0
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 416 and 570 <= mouse[1] <= 645 and pagina == 0: #BOTAO PAGINA 4
             pagina = 4
+        if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 386 and 673 <= mouse[1] <= 748 and pagina == 0: #BOTAO PAGINA 5
+            pagina = 5
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 850 and 765 <= mouse[1] <= 840 and pagina == 0: #BOTAO PAGINA 6
             pagina = 6
-        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3 or pagina == 6 or pagina == 4): #BOTAO VOLTAR MENU
+        if event.type == MOUSEBUTTONDOWN and 20 <= mouse[0] <= 110 and 20 <= mouse[1] <= 105 and (pagina == 1 or pagina == 2 or pagina == 3 or pagina == 6 or pagina == 4 or pagina == 5): #BOTAO VOLTAR MENU
             pagina = 0
         if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 1: #INSERIR PAGINA 1
             content1 = input_box1.returnText()
@@ -2130,6 +2197,16 @@ while True:
 
                 pilha.inserir(elemento)
 
+        if event.type == MOUSEBUTTONDOWN and 186 <= mouse[0] <= 269 and 416 <= mouse[1] <= 446 and pagina == 5: #INSERIR PAGINA 5
+            seguir_mouse = False
+
+            content20 = input_box20.returnText()
+
+            if content20 != "":
+                elemento = Elemento_fila(fila.x, fila.y, content20)
+
+                fila.inserir(elemento)
+
         if event.type == MOUSEBUTTONDOWN and 375 <= mouse[0] <= 458 and 327 <= mouse[1] <= 359 and pagina == 6: #INSERIR PAGINA 6
             seguir_mouse = False
         
@@ -2181,6 +2258,12 @@ while True:
             seguir_mouse = False
 
             pilha.remover()
+
+        if event.type == MOUSEBUTTONDOWN and 586 <= mouse[0] <= 684 and 416 <= mouse[1] <= 446 and pagina == 5: #REMOVER PAGINA 5
+            seguir_mouse = False
+
+            fila.remover()
+
         if event.type == MOUSEBUTTONDOWN and 778 <= mouse[0] <= 878 and 328 <= mouse[1] <= 358 and pagina == 6: #REMOVER PAGINA 6
             seguir_mouse = False
             
@@ -2281,6 +2364,12 @@ while True:
             seguir_mouse = False
 
             pilha.draw_topo()
+
+        if event.type == MOUSEBUTTONDOWN and 956 <= mouse[0] <= 1069 and 416 <= mouse[1] <= 446 and pagina == 5: #CONSULTAR PAGINA 5
+            seguir_mouse = False
+
+            fila.draw_topo()
+
         if event.type == MOUSEBUTTONDOWN and 1063 <= mouse[0] <= 1176 and 458 <= mouse[1] <= 490 and pagina == 6: #CONSULTAR PAGINA 6
             seguir_mouse = False
             
@@ -2307,7 +2396,7 @@ while True:
 
             posordem(root, "")
 
-        if event.type == MOUSEBUTTONUP and (pagina == 6 or pagina == 4):
+        if event.type == MOUSEBUTTONUP and (pagina == 6 or pagina == 4 or pagina == 5):
             seguir_mouse = False
             
         if event.type == MOUSEBUTTONDOWN and 601 <= mouse[0] <= 729 and 790 <= mouse[1] <= 875 and (pagina == 2 or pagina == 3): #MOVER A LISTA PARA DIREITA
@@ -2335,6 +2424,9 @@ while True:
         if pagina == 4:
             input_box19.handle_event(event)
 
+        if pagina == 5:
+            input_box20.handle_event(event)
+
         for box in input_boxes4:
             if pagina == 6:
                 box.handle_event(event)
@@ -2349,6 +2441,8 @@ while True:
         box.update()
 
     input_box19.update()
+
+    input_box20.update()
 
     for box in input_boxes4:
         box.update()
@@ -2374,6 +2468,8 @@ while True:
             color5 = highlight_button(210, 416, 570, 645)
 
             color4 = highlight_button(210, 850, 765, 840)
+            
+            color6 = highlight_button(210, 386, 673, 748)
 
             pygame.draw.rect(tela, color1, (210, 270, 475, 75), 2)
 
@@ -2384,6 +2480,8 @@ while True:
             pygame.draw.rect(tela, color5, (210, 570, 206, 75), 2)
 
             pygame.draw.rect(tela, color4, (210, 765, 640, 75), 2)
+
+            pygame.draw.rect(tela, color6, (210, 673, 176, 75), 2)
 
         case 1: #LISTAS SEQUENCIAIS
             tela.blit(tela1, (0, 0))
@@ -2464,6 +2562,27 @@ while True:
 
                 for elemento in pilha.dados:
                     elemento.y += deltay_mouse
+        case 5:
+            tela.blit(tela5, (0, 0))
+
+            input_box20.draw(tela)
+
+            fila.draw()
+
+            highlight_boxes(0, 1)
+
+            if fila.consultar:
+                topo = fila.dados[0].dado
+                tela.blit(topo, (978, 313))
+                pygame.display.update()
+                time.sleep(2)
+                fila.consultar = False
+
+            if seguir_mouse:
+                fila.x += deltax_mouse
+
+                for elemento in fila.dados:
+                    elemento.x += deltax_mouse
         case 6:
             tela.blit(tela6, (0, 0))
 
