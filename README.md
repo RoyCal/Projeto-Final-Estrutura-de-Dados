@@ -5,6 +5,7 @@
 - Listas simplesmente encadeadas
 - Listas duplamente encadeadas
 - Pilhas
+- Filas
 - Árvore binária de busca
 
 ## Requirements:
