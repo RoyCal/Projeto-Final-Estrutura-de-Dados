@@ -2124,9 +2124,9 @@ while True:
 
                         i += 1
             
-        if event.type == MOUSEBUTTONDOWN: #printa as coordenadas do mouse para facilitar a implementacao
-            print("X: ", mouse[0])
-            print("Y: ", mouse[1])
+        # if event.type == MOUSEBUTTONDOWN: #printa as coordenadas do mouse para facilitar a implementacao
+        #     print("X: ", mouse[0])
+        #     print("Y: ", mouse[1])
         if event.type == MOUSEBUTTONDOWN and (pagina == 6 or pagina == 4 or pagina == 5):
             seguir_mouse = True
         if event.type == MOUSEBUTTONDOWN and 210 <= mouse[0] <= 685 and 270 <= mouse[1] <= 345 and pagina == 0: #BOTAO PAGINA 1
