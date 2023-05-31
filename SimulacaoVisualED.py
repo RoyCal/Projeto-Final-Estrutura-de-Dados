@@ -925,6 +925,15 @@ def insert(root_node, value):
             time.sleep(0.8)
             current_node.color = "black"
 
+            if current_node == value:
+                texto = FONT.render("Valor repetido", True, "red")
+                tela.blit(texto, (527, 386))
+                pygame.display.update()
+
+                time.sleep(2)
+
+                return root_node
+
             if value < current_node.data:
                 if current_node.left_child is None:
                     current_node.left_child = new_node
