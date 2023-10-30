@@ -1,4 +1,4 @@
-# Projeto 1 Estrutura de Dados
+# Projeto Final Estrutura de Dados
 
 ### Este projeto tem como objetivo ilustrar de forma visual o funcionamento de algumas estruturas de dados, tais como:
 - Listas sequenciais
